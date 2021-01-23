@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block header %}
+            <h1 class="m-0">Board States</h1>
+Configure the rotation of your boards based on the board state (<a href="https://github.com/riffnshred/nhl-led-scoreboard/tree/dev#states-1" target="_blank">Learn more</a>)
+{% endblock %}
+
+{% block content %}
+      <div class="container-fluid">
+        <!-- Main row -->
+        <div class="row">
+          <!-- Left col -->
+          <section class="col-lg-6 connectedSortable">
+<div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Off-Day</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+
+<select class="form-control">
+<option>option 1</option>
+</select>
+<a href="">+ Add</a>
+</div></div>
+
+<div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Pre-Game</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+<select class="form-control">
+                          <option>option 1</option>
+                          <option>option 2</option>
+                          <option>option 3</option>
+                          <option>option 4</option>
+                          <option>option 5</option>
+                        </select>
+
+<a href="">+ Add</a>
+
+</div></div>
+
+          </section>
+          <!-- /.Left col -->
+          <!-- right col (We are only adding the ID to make the widgets sortable)-->
+          <section class="col-lg-6 connectedSortable">
+
+
+<div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Intermission</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+<select class="form-control">
+                          <option>option 1</option>
+                          <option>option 2</option>
+                          <option>option 3</option>
+                          <option>option 4</option>
+                          <option>option 5</option>
+                        </select>
+<a href="">+ Add</a>
+</div></div>
+
+<div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Post-Game</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+<select class="form-control">
+                          <option>option 1</option>
+                          <option>option 2</option>
+                          <option>option 3</option>
+                          <option>option 4</option>
+                          <option>option 5</option>
+                        </select>
+
+<a href="">+ Add</a>
+</div></div>
+
+          </section>
+          <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+<button type="submit" class="btn btn-primary">Save</button>
+<button type="submit" class="btn btn-info">Save & Apply</button>
+      </div><!-- /.container-fluid -->
+
+{% endblock %}

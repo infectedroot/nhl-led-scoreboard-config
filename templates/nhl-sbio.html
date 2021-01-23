@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block header %}
+            <h1 class="m-0">Scoreboard Inputs / Outputs</h1>
+Things that influence how the board operates
+{% endblock %}
+
+{%block content %}
+      <div class="container-fluid">
+        <!-- Main row -->
+        <div class="row">
+          <!-- Left col -->
+          <section class="col-lg-12 connectedSortable">
+
+<div class="card">
+              <div class="card-header">
+                <h3 class="card-title">General</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+<div class="row">
+<div class="col-sm-6">
+<dl class="row">
+<dt class="col-sm-4">Enabled</dt>
+<dd class="col-sm-8">
+<select class="form-control">
+<option>option 1</option>
+</select>
+<small>When do we show goal animations?</small><br/><br/>
+</dd>
+
+  <dt class="col-sm-4">Live Mode</dt>
+  <dd class="col-sm-8">
+
+<select class="form-control">
+                          <option>option 1</option>
+                          <option>option 2</option>
+                          <option>option 3</option>
+                          <option>option 4</option>
+                          <option>option 5</option>
+                        </select>
+
+<small>Will we show the live score on the board?</small><br/><br/>
+</dd>
+
+  <dt class="col-sm-4">Daytime</dt>
+  <dd class="col-sm-8">
+<select class="form-control">
+<option>option 1</option>
+</select>
+<small>How often does the board refresh?</small><br/><br/>
+  </dd>
+
+<dt class="col-sm-4">Nighttime</dt>
+<dd class="col-sm-8">
+<select class="form-control">
+                          <option>option 1</option>
+                          <option>option 2</option>
+                          <option>option 3</option>
+                          <option>option 4</option>
+                          <option>option 5</option>
+                        </select>
+<small>How often do we show shots on goal?</small><br/><br/>
+</dd>
+</dl>
+</div>
+
+<div class="col-sm-6">
+<dl class="row">
+  <dt class="col-sm-4">Offset</dt>
+  <dd class="col-sm-8">
+<select class="form-control">
+                          <option>option 1</option>
+                          <option>option 2</option>
+                          <option>option 3</option>
+                          <option>option 4</option>
+                          <option>option 5</option>
+                        </select>
+<small>How will the time look? Army time or civilian time?</small><br/><br/>
+</dd>
+
+  <dt class="col-sm-4">Frequency</dt>
+  <dd class="col-sm-8">
+<select class="form-control">
+                          <option>option 1</option>
+                          <option>option 2</option>
+                          <option>option 3</option>
+                          <option>option 4</option>
+                          <option>option 5</option>
+                        </select>
+<small>When do we start showing the day's games?</small><br/><br/>
+</dd>
+
+<dt class="col-sm-4">Light Level Lux</dt>
+<dd class="col-sm-8">
+<input type="text" class="form-control" placeholder="Enter ...">
+<small>Where are you? Enter your City name</small><br/>
+</dd>
+
+
+<dt class="col-sm-4">Mode</dt>
+<dd class="col-sm-8">
+<input type="text" class="form-control" placeholder="Enter ...">
+<small>Where are you? Enter your City name</small><br/>
+</dd>
+
+<dt class="col-sm-4">Sunset Brightness</dt>
+<dd class="col-sm-8">
+<input type="text" class="form-control" placeholder="Enter ...">
+<small>Where are you? Enter your City name</small><br/>
+</dd>
+
+</dl>
+</div>
+</div></div>
+          </section>
+          <!-- /.Left col -->
+          <!-- right col (We are only adding the ID to make the widgets sortable)-->
+          <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+<button type="submit" class="btn btn-primary">Save</button>
+<button type="submit" class="btn btn-info">Save & Apply</button>
+      </div><!-- /.container-fluid -->
+
+{% endblock %}

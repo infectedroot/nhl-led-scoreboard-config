@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block header %}
+            <h1 class="m-0">Overview</h1>
+            Welcome to the NHL Scoreboard Configurator!
+{% endblock %}
+
+
+{% block content %}
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Main row -->
+        <div class="row">
+          <!-- Left col -->
+          <section class="col-lg-5 connectedSortable">
+
+<div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Control</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+
+<div class="row">
+&nbsp;&nbsp;&nbsp;<button type="button" class="col-3 btn bg-gradient-danger btn-lg">Sleep</button>&nbsp;
+<button type="button" class="col-3 btn bg-gradient-danger btn-lg">Restart</button>&nbsp;
+<button type="button" class="col-3 btn bg-gradient-danger btn-lg">Shutdown</button>
+</div>
+</div></div>
+
+<div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Statistics</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+Uptime<br>
+CPU<br/>
+Memory<br/>
+Disk Space<br/>
+
+</div></div>
+          </section>
+          <!-- /.Left col -->
+          <!-- right col (We are only adding the ID to make the widgets sortable)-->
+          <section class="col-lg-7 connectedSortable">
+
+            <!-- Map card -->
+            <div class="card">
+              <div class="card-header border-0">
+                <h3 class="card-title">
+                  <i class="fas fa-clipboard-list mr-1"></i>
+                  Logs
+                </h3>
+                <!-- /.card-tools -->
+              </div>
+              <div class="card-body">
+<textarea class="form-control" rows="30" placeholder="Enter ..." disabled=""></textarea>
+              </div>
+              <!-- /.card-body-->
+            </div>
+            <!-- /.card -->
+
+          </section>
+          <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+
+
+{% endblock %}
