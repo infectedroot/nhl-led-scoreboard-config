@@ -51,11 +51,11 @@ def index():
 
 @app.route("/prefs")
 def prefs():
-	return render_template('nhl-prefs.html')
+	return render_template('nhl-prefs.html', teams=TEAMS)
 
 @app.route("/states")
 def states():
-	return render_template('nhl-states.html')
+	return render_template('nhl-states.html', boards=BOARDS, boards2=BOARD2)
 
 @app.route("/config")
 def config():
@@ -78,4 +78,6 @@ def send_css(path):
 	return send_from_directory('css', path)
 
 if __name__ == "__main__":
+	# validate json config
+	# load json config
 	app.run(host='0.0.0.0')

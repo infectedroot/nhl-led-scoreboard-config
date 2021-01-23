@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block header %}
-            <h1 class="m-0">Preferences</h1>
+<h1 class="m-0">Preferences</h1>
+Things you like, such as your fave teams.
 {% endblock %}
 
 
@@ -23,8 +24,9 @@
 
 <dt class="col-sm-4">Goal Animations</dt>
 <dd class="col-sm-8">
-<select class="form-control">
-<option>option 1</option>
+<select class="form-control" name=pref_team_only>
+<option value=1>Preferred Team Only</option>
+<option value=0>All Goals</option>
 </select>
 <small>When do we show goal animations?</small><br/><br/>
 </dd>
@@ -32,12 +34,9 @@
   <dt class="col-sm-4">Live Mode</dt>
   <dd class="col-sm-8">
 
-<select class="form-control">
-                          <option>option 1</option>
-                          <option>option 2</option>
-                          <option>option 3</option>
-                          <option>option 4</option>
-                          <option>option 5</option>
+<select class="form-control" name=live_mode>
+                          <option value=1>Enabled</option>
+                          <option value=0>Disabled</option>
                         </select>
 
 <small>Will we show the live score on the board?</small><br/><br/>
@@ -45,44 +44,52 @@
 
   <dt class="col-sm-4">Live Mode Refresh Rate</dt>
   <dd class="col-sm-8">
-<select class="form-control">
-<option>option 1</option>
+<select class="form-control" name=live_mode_refresh_rate>
+<option value=10>Every 10 seconds</option>
+<option value=15>Every 15 seconds</option>
+<option value=20>Every 20 seconds</option>
+<option value=25>Every 25 seconds</option>
+<option value=30>Every 30 seconds</option>
+<option value=45>Every 45 seconds</option>
+<option value=60>Every 60 seconds</option>
 </select>
 <small>How often does the board refresh?</small><br/><br/>
   </dd>
 
 <dt class="col-sm-4">Shots on Goal Frequency</dt>
 <dd class="col-sm-8">
-<select class="form-control">
-                          <option>option 1</option>
-                          <option>option 2</option>
-                          <option>option 3</option>
-                          <option>option 4</option>
-                          <option>option 5</option>
+<select class="form-control" name=sog_freq>
+<option value=2>Every 2 refreshes</option>
+<option value=4>Every 4 refreshes</option>
+<option value=6>Every 6 refreshes</option>
+<option value=8>Every 8 refreshes</option>
+<option value=10>Every 10 refreshes</option>
                         </select>
-<small>How often do we show shots on goal?</small><br/><br/>
+<small>How often do we show shots on goal? (per data refresh)</small><br/><br/>
 </dd>
 
   <dt class="col-sm-4">Time Format</dt>
   <dd class="col-sm-8">
-<select class="form-control">
-                          <option>option 1</option>
-                          <option>option 2</option>
-                          <option>option 3</option>
-                          <option>option 4</option>
-                          <option>option 5</option>
+<select class="form-control" name=time_format>
+                          <option value=12>12h</option>
+                          <option value=24>24h</option>
                         </select>
 <small>How will the time look? Army time or civilian time?</small><br/><br/>
 </dd>
 
   <dt class="col-sm-4">End of Day</dt>
   <dd class="col-sm-8">
-<select class="form-control">
-                          <option>option 1</option>
-                          <option>option 2</option>
-                          <option>option 3</option>
-                          <option>option 4</option>
-                          <option>option 5</option>
+<select class="form-control" name="end_of_day">
+
+{% for i in range(20) %}
+<option value="{{'%02d' % i}}:00">
+	{% if i < 12 %}
+		{% if i == 0 %}12{% else %}{{i}}{% endif %}AM
+	{% else %}
+		{% if i == 12 %}12{% else %}{{i-12}}{% endif %}PM
+	{% endif %}
+</option>
+{% endfor %}
                         </select>
 <small>When do we start showing the day's games?</small><br/><br/>
 </dd>
@@ -108,169 +115,13 @@
               <div class="card-body">
 
 <div class="row">
-<div class="col-4">
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Avalanche</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Blackhawks</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Blues</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Blue Jackets</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Bruins</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Canadiens</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Canucks</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Capitals</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Coyotes</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Devils</label>
-</div>
 
-</div>
-
-<div class="col-4">
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Ducks</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Flames</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Flyers</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Golden Knights</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Hurricanes</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Islanders</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Jets</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Kings</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Maple Leafs</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Lightning</label>
-</div>
-</div>
-<br/>
-<div class="col-4">
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Oilers</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Panthers</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Penguins</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Predators</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Rangers</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Red Wings</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Sabres</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Senators</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Stars</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Sharks</label>
-</div>
-<br/>
-<div class="form-check">
-    <input class="form-check-input" type="checkbox" name="">
-    <label class="form-check-label">Wild</label>
-</div>
-
-</div>
-</div>
+{% for team in teams %}
+<div class="form-check col-4">
+<input class="form-check-input" type="checkbox" name="">
+<label class="form-check-label">{{ team }}</label>
+</div><br/><br/>
+{% endfor %}
 
 </div></div>
           </section>

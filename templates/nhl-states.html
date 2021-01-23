@@ -5,6 +5,13 @@ Configure the rotation of your boards based on the board state (<a href="https:/
 {% endblock %}
 
 {% block content %}
+<style>
+.leg {
+border:1px solid #333; 
+    margin-bottom:10px;
+    background-color:#eee
+}
+</style>
       <div class="container-fluid">
         <!-- Main row -->
         <div class="row">
@@ -17,9 +24,45 @@ Configure the rotation of your boards based on the board state (<a href="https:/
               <!-- /.card-header -->
               <div class="card-body">
 
-<select class="form-control">
-<option>option 1</option>
-</select>
+<div id="box" class="ui-sortable" style="display: block;"> 
+	<div class="leg">
+		<select class="form-control">
+		{% for board in boards %}
+			<option>{{ board }}</option>
+		{% endfor %}
+		</select>
+		<div class="up-down">
+			<div class="up"><input type="button" value="Up" class="up-button"/></div>
+			<div class="down"><input type="button" value="down" class="down-button"/></div>
+			<div class="remove"><input type="button" value="remove" class="down-button"/></div>
+		</div>
+	</div>
+        <div class="leg">
+                <select class="form-control">
+                {% for board in boards %}
+                        <option>{{ board }}</option>
+                {% endfor %}
+                </select>
+                <div class="up-down">
+                        <div class="up"><input type="button" value="Up" class="up-button"/></div>
+                        <div class="down"><input type="button" value="down" class="down-button"/></div>
+                        <div class="remove"><input type="button" value="remove" class="down-button"/></div>
+                </div>
+        </div>
+        <div class="leg">
+                <select class="form-control">
+                {% for board in boards %}
+                        <option>{{ board }}</option>
+                {% endfor %}
+                </select>
+                <div class="up-down">
+                        <div class="up"><input type="button" value="Up" class="up-button"/></div>
+                        <div class="down"><input type="button" value="down" class="down-button"/></div>
+                        <div class="remove"><input type="button" value="remove" class="down-button"/></div>
+                </div>
+        </div>
+</div>
+
 <a href="">+ Add</a>
 </div></div>
 
@@ -87,5 +130,16 @@ Configure the rotation of your boards based on the board state (<a href="https:/
 <button type="submit" class="btn btn-primary">Save</button>
 <button type="submit" class="btn btn-info">Save & Apply</button>
       </div><!-- /.container-fluid -->
+{% endblock %}
 
+{% block footer %}
+<script>
+$('.up-button').click(function(){
+$(this).parents('.leg').insertBefore($(this).parents('.leg').prev());
+});
+
+$('.down-button').click(function(){
+$(this).parents('.leg').insertAfter($(this).parents('.leg').next());
+});
+</script>
 {% endblock %}
