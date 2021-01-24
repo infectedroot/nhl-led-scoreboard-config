@@ -1,4 +1,4 @@
-import flask, time
+import flask, time, json
 from scoreboard_config import ScoreboardConfig
 from flask import request, jsonify, Flask, send_from_directory, render_template
 
@@ -42,6 +42,8 @@ GPIO_PINS = [2,3,7,8,9,10,11,14,15,19,24,25]
 app = flask.Flask(__name__, static_url_path='', static_folder='.',template_folder='templates')
 app.config["DEBUG"] = True
 
+data = {}
+
 @app.route('/')
 def index():
 	posts = ""
@@ -51,7 +53,7 @@ def index():
 
 @app.route("/prefs")
 def prefs():
-	return render_template('nhl-prefs.html', teams=TEAMS)
+	return render_template('nhl-prefs.html', data=data, teams=TEAMS)
 
 @app.route("/states",methods=('GET', 'POST'))
 def states():
@@ -78,6 +80,13 @@ def send_css(path):
 	return send_from_directory('css', path)
 
 if __name__ == "__main__":
+	with open(configFile) as f:
+		data = json.load(f)
+
+	# Output: {'name': 'Bob', 'languages': ['English', 'Fench']}
+	print(data)
+
+	print(json.dumps(data, indent = 4))
 	# validate json config
 	# load json config
 	app.run(host='0.0.0.0')

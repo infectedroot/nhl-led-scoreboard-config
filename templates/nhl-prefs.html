@@ -7,6 +7,7 @@ Things you like, such as your fave teams.
 
 
 {% block content %}
+
 <form method="POST" action=".">
       <div class="container-fluid">
         <!-- Main row -->
@@ -25,9 +26,9 @@ Things you like, such as your fave teams.
 
 <dt class="col-sm-4">Goal Animations</dt>
 <dd class="col-sm-8">
-<select class="form-control" name=pref_team_only>
-<option value=1>Preferred Team Only</option>
-<option value=0>All Goals</option>
+<select class="form-control" name="goal_animations">
+<option value="true" {% if data["preferences"]["goal_animations"]["pref_team_only"] == true %}selected{% endif %}>Preferred Team Only</option>
+<option value="false" {% if data["preferences"]["goal_animations"]["pref_team_only"] == false %}selected{% endif %}>All Goals</option>
 </select>
 <small>When do we show goal animations?</small><br/><br/>
 </dd>
@@ -35,46 +36,46 @@ Things you like, such as your fave teams.
   <dt class="col-sm-4">Live Mode</dt>
   <dd class="col-sm-8">
 
-<select class="form-control" name=live_mode>
-                          <option value=1>Enabled</option>
-                          <option value=0>Disabled</option>
-                        </select>
+<select class="form-control" name="live_mode">
+<option value="true" {% if data["live_mode"] == true %}selected{% endif %}>Enabled</option>
+<option value="false" {% if data["live_mode"] == false %}selected{% endif %}>Disabled</option>
+</select>
 
 <small>Will we show the live score on the board?</small><br/><br/>
 </dd>
 
   <dt class="col-sm-4">Live Mode Refresh Rate</dt>
   <dd class="col-sm-8">
-<select class="form-control" name=live_mode_refresh_rate>
-<option value=10>Every 10 seconds</option>
-<option value=15>Every 15 seconds</option>
-<option value=20>Every 20 seconds</option>
-<option value=25>Every 25 seconds</option>
-<option value=30>Every 30 seconds</option>
-<option value=45>Every 45 seconds</option>
-<option value=60>Every 60 seconds</option>
+<select class="form-control" name="live_game_refresh_rate">
+<option value="10" {% if data["preferences"]["live_game_refresh_rate"] == 10 %}selected{% endif %}>Every 10 seconds</option>
+<option value="15" {% if data["preferences"]["live_game_refresh_rate"] == 15 %}selected{% endif %}>Every 15 seconds</option>
+<option value="20" {% if data["preferences"]["live_game_refresh_rate"] == 20 %}selected{% endif %}>Every 20 seconds</option>
+<option value="25" {% if data["preferences"]["live_game_refresh_rate"] == 25 %}selected{% endif %}>Every 25 seconds</option>
+<option value="30" {% if data["preferences"]["live_game_refresh_rate"] == 30 %}selected{% endif %}>Every 30 seconds</option>
+<option value="45" {% if data["preferences"]["live_game_refresh_rate"] == 45 %}selected{% endif %}>Every 45 seconds</option>
+<option value="60" {% if data["preferences"]["live_game_refresh_rate"] == 60 %}selected{% endif %}>Every 60 seconds</option>
 </select>
-<small>How often does the board refresh?</small><br/><br/>
+<small>How often does the board poll for new game data?</small><br/><br/>
   </dd>
 
 <dt class="col-sm-4">Shots on Goal Frequency</dt>
 <dd class="col-sm-8">
-<select class="form-control" name=sog_freq>
-<option value=2>Every 2 refreshes</option>
-<option value=4>Every 4 refreshes</option>
-<option value=6>Every 6 refreshes</option>
-<option value=8>Every 8 refreshes</option>
-<option value=10>Every 10 refreshes</option>
+<select class="form-control" name="sog_display_frequency">
+<option value="2" {% if data["preferences"]["sog_display_frequency"] == 2 %}selected{% endif %}>Every 2 polls</option>
+<option value="4" {% if data["preferences"]["sog_display_frequency"] == 4 %}selected{% endif %}>Every 4 polls</option>
+<option value="6" {% if data["preferences"]["sog_display_frequency"] == 6 %}selected{% endif %}>Every 6 polls</option>
+<option value="8" {% if data["preferences"]["sog_display_frequency"] == 8 %}selected{% endif %}>Every 8 polls</option>
+<option value="10" {% if data["preferences"]["sog_display_frequency"] == 10 %}selected{% endif %}>Every 10 pools</option>
                         </select>
 <small>How often do we show shots on goal? (per data refresh)</small><br/><br/>
 </dd>
 
   <dt class="col-sm-4">Time Format</dt>
   <dd class="col-sm-8">
-<select class="form-control" name=time_format>
-                          <option value=12>12h</option>
-                          <option value=24>24h</option>
-                        </select>
+<select class="form-control" name="time_format">
+<option value="12h" {% if data["preferences"]["time_format"] == "12h" %}selected{% endif %}>12h</option>
+<option value="24h" {% if data["preferences"]["time_format"] == "24h" %}selected{% endif %}>24h</option>
+</select>
 <small>How will the time look? Army time or civilian time?</small><br/><br/>
 </dd>
 
@@ -83,7 +84,7 @@ Things you like, such as your fave teams.
 <select class="form-control" name="end_of_day">
 
 {% for i in range(20) %}
-<option value="{{'%02d' % i}}:00">
+<option value="{{i}}:00" {% if data["preferences"]["end_of_day"] == (i|string + ":00") %}selected{% endif %}>
 	{% if i < 12 %}
 		{% if i == 0 %}12{% else %}{{i}}{% endif %}AM
 	{% else %}
@@ -118,10 +119,10 @@ Things you like, such as your fave teams.
 <div class="row">
 
 {% for team in teams %}
-<div class="form-check col-4">
-<input class="form-check-input" type="checkbox" name="">
+<div class="form-check col-4" style="padding-bottom: 5px;">
+<input class="form-check-input" type="checkbox" name="teams[{{ team }}]" id="teams[{{ team }}]" {% if (team in data["preferences"]["teams"]) %}checked{% endif %}>
 <label class="form-check-label">{{ team }}</label>
-</div><br/><br/>
+</div>
 {% endfor %}
 
 </div></div>
@@ -137,5 +138,4 @@ Things you like, such as your fave teams.
 {% endblock %}
 
 {% block footer %}
-
 {% endblock %}
