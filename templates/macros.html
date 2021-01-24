@@ -1,0 +1,35 @@
+{% macro board_org(day_name, var_name) %}
+<div class="card">
+	<div class="card-header">
+		<h3 class="card-title"><strong>{{ day_name }}</strong></h3>
+	</div>
+	<div class="card-body">
+		<div id="box" class="ui-sortable" style="display: block;"></div>
+		<button type="button" class="btn btn-xs btn-info add-button-{{ var_name }}">+ Add</button>
+	</div>
+</div>
+
+
+<div id="board_list_template_{{ var_name }}" style="display: none;">
+	<div class="leg row" style="padding-bottom:5px;">
+		<div class="col-10">
+			<select class="form-control" name="{{ var_name }}_boards[]">
+			{% for board in boards %}
+				<option>{{ board }}</option>
+			{% endfor %}
+			</select>
+		</div>
+		<div class="col-2" style="display: table-cell;vertical-align:middle; text-align:center;">
+			<button type="button" class="btn btn-sm btn-primary up-button"><span class="fa fas fa-angle-up"></span></button>
+			<button type="button" class="btn btn-sm btn-secondary down-button"><span class="fa fas fa-angle-down"></span></button>
+			<button type="button" class="btn btn-sm btn-danger remove-button"><span class="fa fas fa-times"></span></button>
+		</div>
+	</div>
+</div>
+
+<script>
+$(document).on('click', '.add-button-{{ var_name }}',function(){                                                                                                                                                                                            $(this).parent().find(".ui-sortable").append($("#board_list_template").html());
+	$(this).parent().find(".ui-sortable").append($("#board_list_template_{{ var_name }}").html());
+});
+</script>
+{% endmacro %}

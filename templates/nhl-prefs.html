@@ -7,6 +7,7 @@ Things you like, such as your fave teams.
 
 
 {% block content %}
+<form method="POST" action=".">
       <div class="container-fluid">
         <!-- Main row -->
         <div class="row">
@@ -132,5 +133,9 @@ Things you like, such as your fave teams.
 <button type="submit" class="btn btn-info">Save & Apply</button>
       </div><!-- /.container-fluid -->
 
+</form>
+{% endblock %}
+
+{% block footer %}
 
 {% endblock %}

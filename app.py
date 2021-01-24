@@ -53,7 +53,7 @@ def index():
 def prefs():
 	return render_template('nhl-prefs.html', teams=TEAMS)
 
-@app.route("/states")
+@app.route("/states",methods=('GET', 'POST'))
 def states():
 	return render_template('nhl-states.html', boards=BOARDS, boards2=BOARD2)
 
