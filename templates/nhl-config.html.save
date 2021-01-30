@@ -118,10 +118,10 @@ Configure the details of your boards (<a href="https://github.com/riffnshred/nhl
 <dt class="col-sm-4">Divisons</dt>
 <dd class="col-sm-8">
 <select class="form-control">
-<option value=atlantic>Atlantic</option>
-<option value=metropolitan>Metropolitan</option>
-<option value=central>Central</option>
-<option value=pacific>Pacific</option>
+<option value="atlantic">Atlantic</option>
+<option value="metropolitan">Metropolitan</option>
+<option value="central">Central</option>
+<option value="pacific">Pacific</option>
 </select>
 </dd>
 

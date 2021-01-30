@@ -14,18 +14,18 @@ Configure the rotation of your boards based on the board state (<a href="https:/
 			<!-- Left col -->
 			<section class="col-lg-6 connectedSortable">
 
-{{ board_org("Off Day", "offday") }}
+{{ board_org(data, "Off Day", "off_day") }}
 
-{{ board_org("Pre-Game", "pregame") }}
+{{ board_org(data,"Scheduled", "scheduled") }}
 
 			</section>
 			<!-- /.Left col -->
 			<!-- right col (We are only adding the ID to make the widgets sortable)-->
 			<section class="col-lg-6 connectedSortable">
 
-{{ board_org("Intermission", "im") }}
+{{ board_org(data,"Intermission", "intermission") }}
 
-{{ board_org("Post-Game", "postgame") }}
+{{ board_org(data,"Post-Game", "post_game") }}
 
 			</section>
 	<!-- right col -->

@@ -1,6 +1,9 @@
 import flask, time, json
+from distutils.util import strtobool
 from scoreboard_config import ScoreboardConfig
 from flask import request, jsonify, Flask, send_from_directory, render_template
+from watchdog.observers import Observer
+from watchdog.events import PatternMatchingEventHandler
 
 configFile = "config.json.sample"
 
@@ -51,25 +54,37 @@ def index():
 	#return app.send_static_file('templates/overview.html')
 
 
-@app.route("/prefs")
+@app.route("/prefs",methods=('GET', 'POST'))
 def prefs():
-	return render_template('nhl-prefs.html', data=data, teams=TEAMS)
+	if request.method == 'POST':
+		app.data["preferences"]["time_format"] = request.form["time_format"]
+		app.data["preferences"]["end_of_day"] = request.form["end_of_day"]
+		app.data["preferences"]["location"] = request.form["location"]
+		app.data["preferences"]["live_game_refresh_rate"] = int(request.form["live_game_refresh_rate"])
+		app.data["preferences"]["teams"] = request.form.getlist("teams[]")
+		app.data["preferences"]["sog_display_frequency"] = int(request.form["sog_display_frequency"])
+		app.data["preferences"]["goal_animations"]["pref_team_only"] = bool(strtobool(request.form["goal_animations"]))
+		app.data["live_mode"] = bool(strtobool(request.form["live_mode"]))
+		print(app.data["preferences"])
+		save_config()
+	reload_config(None)
+	return render_template('nhl-prefs.html', data=app.data, teams=TEAMS)
 
 @app.route("/states",methods=('GET', 'POST'))
 def states():
-	return render_template('nhl-states.html', boards=BOARDS, boards2=BOARD2)
+	return render_template('nhl-states.html', data=app.data, boards=BOARDS, boards2=BOARD2)
 
 @app.route("/config")
 def config():
-	return render_template('nhl-config.html')
+	return render_template('nhl-config.html', data=app.data)
 
 @app.route("/sbio")
 def sbio():
-	return render_template('nhl-sbio.html')
+	return render_template('nhl-sbio.html', data=app.data)
 
 @app.route("/advanced")
 def advanced():
-	return render_template('nhl-advanced.html')
+	return render_template('nhl-advanced.html', data=app.data)
 
 @app.route('/js/<path:path>')
 def send_js(path):
@@ -79,14 +94,32 @@ def send_js(path):
 def send_css(path):
 	return send_from_directory('css', path)
 
+def reload_config(event):
+    with open(configFile) as f:
+        app.data = json.load(f)
+
+def save_config():
+	f = open(configFile, "w")
+	f.write(json.dumps(app.data, indent = 4))
+	f.close()
+
 if __name__ == "__main__":
-	with open(configFile) as f:
-		data = json.load(f)
+
+    my_event_handler = PatternMatchingEventHandler("*")
+    my_event_handler.on_modified = reload_config
+
+    path = configFile
+    my_observer = Observer()
+    my_observer.schedule(my_event_handler, path)
+    my_observer.start()
+
+    with open(configFile) as f:
+        app.data = json.load(f)
 
 	# Output: {'name': 'Bob', 'languages': ['English', 'Fench']}
-	print(data)
+    print(app.data)
 
-	print(json.dumps(data, indent = 4))
-	# validate json config
-	# load json config
-	app.run(host='0.0.0.0')
+    print(json.dumps(app.data, indent = 4))
+    # validate json config
+    # load json config
+    app.run(host='0.0.0.0')

@@ -8,7 +8,7 @@ Things you like, such as your fave teams.
 
 {% block content %}
 
-<form method="POST" action=".">
+<form method="POST" action="/prefs">
       <div class="container-fluid">
         <!-- Main row -->
         <div class="row">
@@ -27,8 +27,8 @@ Things you like, such as your fave teams.
 <dt class="col-sm-4">Goal Animations</dt>
 <dd class="col-sm-8">
 <select class="form-control" name="goal_animations">
-<option value="true" {% if data["preferences"]["goal_animations"]["pref_team_only"] == true %}selected{% endif %}>Preferred Team Only</option>
-<option value="false" {% if data["preferences"]["goal_animations"]["pref_team_only"] == false %}selected{% endif %}>All Goals</option>
+<option value="1" {% if data["preferences"]["goal_animations"]["pref_team_only"] == true %}selected{% endif %}>Preferred Team Only</option>
+<option value="0" {% if data["preferences"]["goal_animations"]["pref_team_only"] == false %}selected{% endif %}>All Goals</option>
 </select>
 <small>When do we show goal animations?</small><br/><br/>
 </dd>
@@ -37,8 +37,8 @@ Things you like, such as your fave teams.
   <dd class="col-sm-8">
 
 <select class="form-control" name="live_mode">
-<option value="true" {% if data["live_mode"] == true %}selected{% endif %}>Enabled</option>
-<option value="false" {% if data["live_mode"] == false %}selected{% endif %}>Disabled</option>
+<option value="1" {% if data["live_mode"] == true %}selected{% endif %}>Enabled</option>
+<option value="0" {% if data["live_mode"] == false %}selected{% endif %}>Disabled</option>
 </select>
 
 <small>Will we show the live score on the board?</small><br/><br/>
@@ -82,7 +82,7 @@ Things you like, such as your fave teams.
   <dt class="col-sm-4">End of Day</dt>
   <dd class="col-sm-8">
 <select class="form-control" name="end_of_day">
-
+<!-- {{ data["preferences"]["end_of_day"] }} -->
 {% for i in range(20) %}
 <option value="{{i}}:00" {% if data["preferences"]["end_of_day"] == (i|string + ":00") %}selected{% endif %}>
 	{% if i < 12 %}
@@ -98,7 +98,7 @@ Things you like, such as your fave teams.
 
 <dt class="col-sm-4">Location</dt>
 <dd class="col-sm-8">
-<input type="text" class="form-control" placeholder="Enter ...">
+<input type="text" name="location" class="form-control" placeholder="Enter ..." value="{{data["preferences"]["location"] }}">
 <small>Where are you? Enter your City name</small><br/>
 </dd>
 </dl>
@@ -120,7 +120,7 @@ Things you like, such as your fave teams.
 
 {% for team in teams %}
 <div class="form-check col-4" style="padding-bottom: 5px;">
-<input class="form-check-input" type="checkbox" name="teams[{{ team }}]" id="teams[{{ team }}]" {% if (team in data["preferences"]["teams"]) %}checked{% endif %}>
+<input class="form-check-input" type="checkbox" name="teams[]" value="{{ team }}" id="teams[{{ team }}]" {% if (team in data["preferences"]["teams"]) %}checked{% endif %}>
 <label class="form-check-label">{{ team }}</label>
 </div>
 {% endfor %}
