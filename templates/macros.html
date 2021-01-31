@@ -30,6 +30,7 @@
 	<div class="leg row" style="padding-bottom:5px;">
 		<div class="col-10">
 			<select class="form-control" name="{{ var_name }}_boards[]">
+				<option value="">---</option>
 			{% for board in boards %}
 				<option>{{ board }}</option>
 			{% endfor %}
@@ -46,6 +47,12 @@
 <script>
 $(document).on('click', '.add-button-{{ var_name }}',function(){                                                                                                                                                                                            $(this).parent().find(".ui-sortable").append($("#board_list_template").html());
 	$(this).parent().find(".ui-sortable").append($("#board_list_template_{{ var_name }}").html());
+});
+
+$(document).ready(function(){
+	$("#board_form").on("submit", function(){
+		$("#board_list_template_{{ var_name }}").remove();
+	});
 });
 </script>
 {%- endmacro %}

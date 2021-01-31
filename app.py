@@ -72,10 +72,53 @@ def prefs():
 
 @app.route("/states",methods=('GET', 'POST'))
 def states():
-	return render_template('nhl-states.html', data=app.data, boards=BOARDS, boards2=BOARD2)
+	if request.method == 'POST':
+		app.data["states"]["off_day"] = request.form.getlist("off_day_boards[]")
+		app.data["states"]["scheduled"] = request.form.getlist("scheduled_boards[]")
+		app.data["states"]["intermission"] = request.form.getlist("intermission_boards[]")
+		app.data["states"]["post_game"] = request.form.getlist("post_game_boards[]")
+		print(app.data["states"])
+		save_config()
+	reload_config(None)
+	return render_template('nhl-states.html', data=app.data, boards=BOARD2, boards2=BOARD2)
 
-@app.route("/config")
+@app.route("/config",methods=('GET', 'POST'))
 def config():
+	if request.method == 'POST':
+		app.data["boards"]["scoreticker"]["preferred_teams_only"] = bool(strtobool(request.form["score_pref_teams"]))
+		app.data["boards"]["scoreticker"]["rotation_rate"] = int(request.form["score_rotation_rate"])
+		app.data["boards"]["seriesticker"]["preferred_teams_only"] = bool(strtobool(request.form["series_pref_teams"]))
+		app.data["boards"]["seriesticker"]["rotation_rate"] = int(request.form["series_rotation_rate"])
+		app.data["boards"]["standings"]["preferred_standings_only"] = bool(strtobool(request.form["standings_pref_teams"]))
+		app.data["boards"]["standings"]["standing_type"] = request.form["standings_standing_type"]
+		app.data["boards"]["standings"]["divisions"] = request.form["standings_divisions"]
+		app.data["boards"]["standings"]["conference"] = request.form["standings_conference"]
+		app.data["boards"]["clock"]["duration"] = int(request.form["clock_duration"])
+		app.data["boards"]["clock"]["hide_indicator"] = bool(strtobool(request.form["clock_hide_indicator"]))
+		#app.data["boards"]["clock"]["preferred_team_colors"] = bool(strtobool(request.form["clock_pref_teams"]))
+		#app.data["boards"]["clock"]["clock_rgb"] = tuple(map(int, request.form["clock_clock_rgb"][4:-1].split(',')))
+		#app.data["boards"]["clock"]["date_rgb"] = tuple(map(int, request.form["clock_date_rgb"][4:-1].split(',')))
+		app.data["boards"]["clock"]["flash_seconds"] = bool(strtobool(request.form["clock_flash_seconds"]))
+		app.data["boards"]["weather"]["enabled"] = bool(strtobool(request.form["weather_enabled"]))
+		app.data["boards"]["weather"]["view"] = request.form["weather_view"]
+		app.data["boards"]["weather"]["units"] = request.form["weather_units"]
+		app.data["boards"]["weather"]["duration"] = int(request.form["weather_duration"])
+		app.data["boards"]["weather"]["owm_apikey"] = request.form["weather_owm_apikey"]
+		app.data["boards"]["weather"]["update_freq"] = int(request.form["weather_update_freq"])
+		app.data["boards"]["weather"]["show_on_clock"] = bool(strtobool(request.form["weather_show_on_clock"]))
+		app.data["boards"]["weather"]["forecast_enabled"] = bool(strtobool(request.form["weather_forecast_enabled"]))
+		app.data["boards"]["weather"]["forecast_days"] = int(request.form["weather_forecast_days"])
+		app.data["boards"]["weather"]["forecast_update"] = int(request.form["weather_forecast_update"])
+		app.data["boards"]["wxalert"]["alert_feed"] = request.form["wxalert_alert_feed"]
+		app.data["boards"]["wxalert"]["update_freq"] = int(request.form["wxalert_update_freq"])
+		app.data["boards"]["wxalert"]["show_alerts"] = bool(strtobool(request.form["wxalert_show_alerts"]))
+		app.data["boards"]["wxalert"]["nws_show_expire"] = bool(strtobool(request.form["wxalert_nws_show_expire"]))
+		app.data["boards"]["wxalert"]["alert_title"] = bool(strtobool(request.form["wxalert_alert_title"]))
+		app.data["boards"]["wxalert"]["scroll_alert"] = bool(strtobool(request.form["wxalert_scroll_alert"]))
+		app.data["boards"]["wxalert"]["alert_duration"] = int(request.form["wxalert_alert_duration"])
+		app.data["boards"]["wxalert"]["show_on_clock"] = bool(strtobool(request.form["wxalert_show_on_clock"]))
+		save_config()
+	reload_config(None)
 	return render_template('nhl-config.html', data=app.data)
 
 @app.route("/sbio")
@@ -122,4 +165,4 @@ if __name__ == "__main__":
     print(json.dumps(app.data, indent = 4))
     # validate json config
     # load json config
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=80)

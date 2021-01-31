@@ -8,7 +8,7 @@ Configure the details of your boards (<a href="https://github.com/riffnshred/nhl
 
 
 {% block content %}
-
+<form method="POST" id="config_form">
 <div class="container-fluid">
 <!-- Main row -->
 <div class="row">
@@ -31,7 +31,7 @@ Configure the details of your boards (<a href="https://github.com/riffnshred/nhl
 
 <dt class="col-sm-4">Preferred Teams Only</dt>
 <dd class="col-sm-8">
-<select class="form-control">
+<select class="form-control" name="score_pref_teams">
 <option value=1 {% if data["boards"]["scoreticker"]["preferred_teams_only"] == true %}selected{% endif %}>Yes</option>
 <option value=0 {% if data["boards"]["scoreticker"]["preferred_teams_only"] == false %}selected{% endif %}>No</option>
 </select>
@@ -39,13 +39,13 @@ Configure the details of your boards (<a href="https://github.com/riffnshred/nhl
 
 <dt class="col-sm-4">Rotation Rate</dt>
 <dd class="col-sm-8">
-<select class="form-control">
-<option {% if data["boards"]["scoreticker"]["rotation_rate"] == 5 %}selected{% endif %}>5</option>
-<option {% if data["boards"]["scoreticker"]["rotation_rate"] == 10 %}selected{% endif %}>10</option>
-<option {% if data["boards"]["scoreticker"]["rotation_rate"] == 15 %}selected{% endif %}>15</option>
-<option {% if data["boards"]["scoreticker"]["rotation_rate"] == 20 %}selected{% endif %}>20</option>
-<option {% if data["boards"]["scoreticker"]["rotation_rate"] == 25 %}selected{% endif %}>25</option>
-<option {% if data["boards"]["scoreticker"]["rotation_rate"] == 30 %}selected{% endif %}>30</option>
+<select class="form-control" name="score_rotation_rate">
+<option {% if data["boards"]["scoreticker"]["rotation_rate"] == 5 %}selected{% endif %} value="5">5 seconds</option>
+<option {% if data["boards"]["scoreticker"]["rotation_rate"] == 10 %}selected{% endif %} value="10">10 seconds</option>
+<option {% if data["boards"]["scoreticker"]["rotation_rate"] == 15 %}selected{% endif %} value="15">15 seconds</option>
+<option {% if data["boards"]["scoreticker"]["rotation_rate"] == 30 %}selected{% endif %} value="30">30 seconds</option>
+<option {% if data["boards"]["scoreticker"]["rotation_rate"] == 45 %}selected{% endif %} value="45">45 seconds</option>
+<option {% if data["boards"]["scoreticker"]["rotation_rate"] == 60 %}selected{% endif %} value="60">60 seconds</option>
 </select>
 </dd>
 
@@ -68,7 +68,7 @@ Configure the details of your boards (<a href="https://github.com/riffnshred/nhl
 
 <dt class="col-sm-4">Preferred Teams Only</dt>
 <dd class="col-sm-8">
-<select class="form-control">
+<select class="form-control" name="series_pref_teams">
 <option value=1 {% if data["boards"]["seriesticker"]["preferred_teams_only"] == true %}selected{% endif %}>Yes</option>
 <option value=0 {% if data["boards"]["seriesticker"]["preferred_teams_only"] == false %}selected{% endif %}>No</option>
 </select>
@@ -76,13 +76,13 @@ Configure the details of your boards (<a href="https://github.com/riffnshred/nhl
 
 <dt class="col-sm-4">Rotation Rate</dt>
 <dd class="col-sm-8">
-<select class="form-control">
-<option {% if data["boards"]["seriesticker"]["rotation_rate"] == 5 %}selected{% endif %}>5</option>
-<option {% if data["boards"]["seriesticker"]["rotation_rate"] == 10 %}selected{% endif %}>10</option>
-<option {% if data["boards"]["seriesticker"]["rotation_rate"] == 15 %}selected{% endif %}>15</option>
-<option {% if data["boards"]["seriesticker"]["rotation_rate"] == 20 %}selected{% endif %}>20</option>
-<option {% if data["boards"]["seriesticker"]["rotation_rate"] == 25 %}selected{% endif %}>25</option>
-<option {% if data["boards"]["seriesticker"]["rotation_rate"] == 30 %}selected{% endif %}>30</option>
+<select class="form-control" name="series_rotation_rate">
+<option {% if data["boards"]["seriesticker"]["rotation_rate"] == 5 %}selected{% endif %} value="5">5 seconds</option>
+<option {% if data["boards"]["seriesticker"]["rotation_rate"] == 10 %}selected{% endif %} value="10">10 seconds</option>
+<option {% if data["boards"]["seriesticker"]["rotation_rate"] == 15 %}selected{% endif %} value="15">15 seconds</option>
+<option {% if data["boards"]["seriesticker"]["rotation_rate"] == 30 %}selected{% endif %} value="30">30 seconds</option>
+<option {% if data["boards"]["seriesticker"]["rotation_rate"] == 45 %}selected{% endif %} value="45">45 seconds</option>
+<option {% if data["boards"]["seriesticker"]["rotation_rate"] == 60 %}selected{% endif %} value="60">60 seconds</option>
 </select>
 </dd>
 
@@ -101,7 +101,7 @@ Configure the details of your boards (<a href="https://github.com/riffnshred/nhl
 
 <dt class="col-sm-4">Preferred Teams Only</dt>
 <dd class="col-sm-8">
-<select class="form-control">
+<select class="form-control" name="standings_pref_teams">
 <option value=1 {% if data["boards"]["standings"]["preferred_teams_only"] == true %}selected{% endif %}>Yes</option>
 <option value=0 {% if data["boards"]["standings"]["preferred_teams_only"] == false %}selected{% endif %}>No</option>
 </select>
@@ -109,7 +109,7 @@ Configure the details of your boards (<a href="https://github.com/riffnshred/nhl
 
 <dt class="col-sm-4">Standing Type</dt>
 <dd class="col-sm-8">
-<select class="form-control">
+<select class="form-control" name="standings_standing_type">
 <option value="conference" {% if data["boards"]["standings"]["standing_type"] == "conference" %}selected{% endif %}>Conference</option>
 <option value="division" {% if data["boards"]["standings"]["standing_type"] == "division" %}selected{% endif %}>Division</option>
 </select>
@@ -117,19 +117,19 @@ Configure the details of your boards (<a href="https://github.com/riffnshred/nhl
 
 <dt class="col-sm-4">Divisons</dt>
 <dd class="col-sm-8">
-<select class="form-control">
-<option value=atlantic>Atlantic</option>
-<option value=metropolitan>Metropolitan</option>
-<option value=central>Central</option>
-<option value=pacific>Pacific</option>
+<select class="form-control" name="standings_divisions">
+<option value="atlantic" {% if data["boards"]["standings"]["divisions"] == "atlantic" %}selected{% endif %}>Atlantic</option>
+<option value="metropolitan" {% if data["boards"]["standings"]["divisions"] == "metropolitan" %}selected{% endif %}>Metropolitan</option>
+<option value="central" {% if data["boards"]["standings"]["divisions"] == "central" %}selected{% endif %}>Central</option>
+<option value="pacific" {% if data["boards"]["standings"]["divisions"] == "pacific" %}selected{% endif %}>Pacific</option>
 </select>
 </dd>
 
 <dt class="col-sm-4">Conference</dt>
 <dd class="col-sm-8">
-<select class="form-control">
-<option value=eastern>Eastern</option>
-<option value=western>Western</option>
+<select class="form-control" name="standings_conference">
+<option value="eastern" {% if data["boards"]["standings"]["conference"] == "eastern" %}selected{% endif %}>Eastern</option>
+<option value="western" {% if data["boards"]["standings"]["conference"] == "western" %}selected{% endif %}>Western</option>
 </select>
 </dd>
 </div>
@@ -148,27 +148,55 @@ Configure the details of your boards (<a href="https://github.com/riffnshred/nhl
 
 <dt class="col-sm-4">Duration</dt>
 <dd class="col-sm-8">
-<select class="form-control">
-<option value=15>15 seconds</option>
-<option value=30>30 seconds</option>
-<option value=60>1 minute</option>
-<option value=120>2 minutes</option>
-<option value=180>3 minutes</option>
-<option value=240>4 minutes</option>
-<option value=300>5 minutes</option>
-<option value=600>10 minutes</option>
-<option value=900>15 minutes</option>
+<select class="form-control" name="clock_duration">
+<option value="15" {% if data["boards"]["clock"]["duration"] == 15 %}selected{% endif %}>15 seconds</option>
+<option value="30" {% if data["boards"]["clock"]["duration"] == 30 %}selected{% endif %}>30 seconds</option>
+<option value="60" {% if data["boards"]["clock"]["duration"] == 60 %}selected{% endif %}>1 minute</option>
+<option value="120" {% if data["boards"]["clock"]["duration"] == 120 %}selected{% endif %}>2 minutes</option>
+<option value="180" {% if data["boards"]["clock"]["duration"] == 180 %}selected{% endif %}>3 minutes</option>
+<option value="240" {% if data["boards"]["clock"]["duration"] == 240 %}selected{% endif %}>4 minutes</option>
+<option value="300" {% if data["boards"]["clock"]["duration"] == 300 %}selected{% endif %}>5 minutes</option>
+<option value="600" {% if data["boards"]["clock"]["duration"] == 600 %}selected{% endif %}>10 minutes</option>
+<option value="900" {% if data["boards"]["clock"]["duration"] == 900 %}selected{% endif %}>15 minutes</option>
 </select>
 </dd>
 
 <dt class="col-sm-4">Hide Indicator</dt>
 <dd class="col-sm-8">
-<select class="form-control">
-<option value=1>Yes</option>
-<option value=0>No</option>
+<select class="form-control" name="clock_hide_indicator">
+<option value="1" {% if data["boards"]["clock"]["hide_indicator"] == true %}selected{% endif %}>Yes</option>
+<option value="0" {% if data["boards"]["clock"]["hide_indicator"] == false %}selected{% endif %}>No</option>
 </select>
 </dd>
 
+<dt class="col-sm-4">Flash Seconds</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="clock_flash_seconds">
+<option value="1" {% if data["boards"]["clock"]["flash_seconds"] == true %}selected{% endif %}>Yes</option>
+<option value="0" {% if data["boards"]["clock"]["flash_seconds"] == false %}selected{% endif %}>No</option>
+</select>
+</dd>
+<!--
+<dt class="col-sm-4">Colors</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="clock_pref_teams">
+<option value="1" {% if data["boards"]["clock"]["preferred_team_colors"] == true %}selected{% endif %}>Preferred Team's Color</option>
+<option value="0" {% if data["boards"]["clock"]["preferred_team_colors"] == false %}selected{% endif %}>Custom</option>
+</select>
+</dd>
+
+<dt class="col-sm-4">Clock Color</dt>
+<dd class="col-sm-8">
+<input type='text' id="clock_clock_rgb" name="clock_clock_rgb" />
+<script>$("#clock_clock_rgb").spectrum({color: "rgb{{ data["boards"]["clock"]["clock_rgb"] }}", preferredFormat: "rgb"});</script>
+</dd>
+
+<dt class="col-sm-4">Date Color</dt>
+<dd class="col-sm-8">
+<input type='text' id="clock_date_rgb" name="clock_date_rgb" />
+<script>$("#clock_date_rgb").spectrum({color: "rgb{{ data["boards"]["clock"]["date_rgb"] }}", preferredFormat: "rgb"});</script>
+</dd>
+-->
 </div>
 <!-- /.card-body -->
 </div>
@@ -192,107 +220,204 @@ Configure the details of your boards (<a href="https://github.com/riffnshred/nhl
 
 <dt class="col-sm-4">Enabled</dt>
 <dd class="col-sm-8">
-<select class="form-control">
-<option value=1>Yes</option>
-<option value=0>No</option>
+<select class="form-control" name="weather_enabled">
+<option value="1" {% if data["boards"]["weather"]["enabled"] == true %}selected{% endif %}>Yes</option>
+<option value="0" {% if data["boards"]["weather"]["enabled"] == false %}selected{% endif %}>No</option>
+</select>
+</dd>
+
+<dt class="col-sm-4">View</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="weather_view">
+<option value="full" {% if data["boards"]["weather"]["view"] == "full" %}selected{% endif %}>Full</option>
 </select>
 </dd>
 
 <dt class="col-sm-4">Units</dt>
 <dd class="col-sm-8">
-<select class="form-control">
-<option value=metric>Metric</option>
-<option value=imperial>Imperial</option>
+<select class="form-control" name="weather_units">
+<option value="metric" {% if data["boards"]["weather"]["units"] == "metric" %}selected{% endif %}>Metric</option>
+<option value="imperial" {% if data["boards"]["weather"]["units"] == "imperial" %}selected{% endif %}>Imperial</option>
 </select>
 </dd>
 
 <dt class="col-sm-4">Duration</dt>
 <dd class="col-sm-8">
-<select class="form-control">
-<option value=30>30 seconds</option>
-<option value=45>45 seconds</option>
-<option value=60>1 minute</option>
-<option value=120>2 minutes</option>
-<option value=180>3 minutes</option>
-<option value=240>4 minutes</option>
-<option value=300>5 minutes</option>
-</select>
-</dd>
-
-<dt class="col-sm-4">Data Feed</dt>
-<dd class="col-sm-8">
-<select class="form-control">
-<option value=EC>EnvCanada</option>
-<option value=OWM>OpenWeatherMap</option>
-</select>
-</dd>
-
-<dt class="col-sm-4">Alert Feed</dt>
-<dd class="col-sm-8">
-<select class="form-control">
-<option value=EC>EnvCanada</option>
-<option value=NWS>National Weather Service (US Only)</option>
-</select>
-</dd>
-
-<dt class="col-sm-4">OWM API Key</dt>
-<dd class="col-sm-8">
-<input type="text" class="form-control" placeholder="Enter ...">
-</dd>
-
-<dt class="col-sm-4">Update Frequency</dt>
-<dd class="col-sm-8">
-<select class="form-control">
-<option value=5>5 minutes</option>
-<option value=10>10 minutes</option>
-<option value=15>15 minutes</option>
-<option value=30>30 minutes</option>
-<option value=60>1 hour</option>
-</select>
-</dd>
-
-<dt class="col-sm-4">Show Alerts</dt>
-<dd class="col-sm-8">
-<select class="form-control">
-<option value=1>Yes</option>
-<option value=0>No</option>
-</select>
-</dd>
-
-<dt class="col-sm-4">Alert Title</dt>
-<dd class="col-sm-8">
-<select class="form-control">
-<option value=1>Yes</option>
-<option value=0>No</option>
-</select>
-</dd>
-
-<dt class="col-sm-4">Scroll Alert</dt>
-<dd class="col-sm-8">
-<select class="form-control">
-<option value=1>Yes</option>
-<option value=0>No</option>
-</select>
-</dd>
-
-<dt class="col-sm-4">Alert Duration</dt>
-<dd class="col-sm-8">
-<select class="form-control">
-<option value=5>5 seconds</option>
-<option value=10>10 seconds</option>
-<option value=15>15 seconds</option>
-<option value=30>30 seconds</option>
-<option value=60>1 minute</option>
+<select class="form-control" name="weather_duration">
+<option value="30" {% if data["boards"]["weather"]["duration"] == 30 %}selected{% endif %}>30 seconds</option>
+<option value="45" {% if data["boards"]["weather"]["duration"] == 45 %}selected{% endif %}>45 seconds</option>
+<option value="60" {% if data["boards"]["weather"]["duration"] == 60 %}selected{% endif %}>1 minute</option>
+<option value="120" {% if data["boards"]["weather"]["duration"] == 120 %}selected{% endif %}>2 minutes</option>
+<option value="180" {% if data["boards"]["weather"]["duration"] == 180 %}selected{% endif %}>3 minutes</option>
+<option value="240" {% if data["boards"]["weather"]["duration"] == 240 %}selected{% endif %}>4 minutes</option>
+<option value="300" {% if data["boards"]["weather"]["duration"] == 300 %}selected{% endif %}>5 minutes</option>
 </select>
 </dd>
 
 <dt class="col-sm-4">Show On Clock</dt>
 <dd class="col-sm-8">
-<select class="form-control">
-<option value=1>Yes</option>
-<option value=0>No</option>
+<select class="form-control" name="weather_show_on_clock">
+<option value="1" {% if data["boards"]["weather"]["show_on_clock"] == true %}selected{% endif %}>Yes</option>
+<option value="0" {% if data["boards"]["weather"]["show_on_clock"] == false %}selected{% endif %}>No</option>
 </select>
 </dd>
+
+<dt class="col-sm-4">Data Feed</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="weather_data_feed">
+<option value="EC" {% if data["boards"]["weather"]["data_feed"] == "EC" %}selected{% endif %}>EnvCanada</option>
+<option value="OWM" {% if data["boards"]["weather"]["data_feed"] == "OWM" %}selected{% endif %}>OpenWeatherMap</option>
+</select>
+</dd>
+
+<dt class="col-sm-4">OWM API Key</dt>
+<dd class="col-sm-8">
+<input type="text" class="form-control" placeholder="Enter if you selected OWM above" value="{{ data["boards"]["weather"]["owm_apikey"] }}" name="weather_owm_apikey">
+</dd>
+
+<dt class="col-sm-4">Update Frequency</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="weather_update_freq">
+<option value="5" {% if data["boards"]["weather"]["update_freq"] == 5 %}selected{% endif %}>5 minutes</option>
+<option value="10" {% if data["boards"]["weather"]["update_freq"] == 10 %}selected{% endif %}>10 minutes</option>
+<option value="15" {% if data["boards"]["weather"]["update_freq"] == 15 %}selected{% endif %}>15 minutes</option>
+<option value="30" {% if data["boards"]["weather"]["update_freq"] == 30 %}selected{% endif %}>30 minutes</option>
+<option value="60" {% if data["boards"]["weather"]["update_freq"] == 60 %}selected{% endif %}>1 hour</option>
+</select>
+</dd>
+
+<dt class="col-sm-4">Forecast Enabled</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="weather_forecast_enabled">
+<option value="1" {% if data["boards"]["weather"]["forecast_enabled"] == true %}selected{% endif %}>Yes</option>
+<option value="0" {% if data["boards"]["weather"]["forecast_enabled"] == false %}selected{% endif %}>No</option>
+</select>
+</dd>
+
+<dt class="col-sm-4">Forecast Days</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="weather_forecast_days">
+<option value="3" {% if data["boards"]["weather"]["forecast_days"] == 3 %}selected{% endif %}>3 days</option>
+<option value="5" {% if data["boards"]["weather"]["forecast_days"] == 5 %}selected{% endif %}>5 days</option>
+<option value="7" {% if data["boards"]["weather"]["forecast_days"] == 7 %}selected{% endif %}>7 days</option>
+<option value="10" {% if data["boards"]["weather"]["forecast_days"] == 10 %}selected{% endif %}>10 days</option>
+<option value="12" {% if data["boards"]["weather"]["forecast_days"] == 12 %}selected{% endif %}>12 days</option>
+</select>
+</dd>
+
+<dt class="col-sm-4">Forecast Update</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="weather_forecast_update">
+<option value="1" {% if data["boards"]["weather"]["forecast_update"] == 1 %}selected{% endif %}>1 hour</option>
+<option value="2" {% if data["boards"]["weather"]["forecast_update"] == 2 %}selected{% endif %}>2 hours</option>
+<option value="4" {% if data["boards"]["weather"]["forecast_update"] == 4 %}selected{% endif %}>4 hours</option>
+<option value="6" {% if data["boards"]["weather"]["forecast_update"] == 6 %}selected{% endif %}>6 hours</option>
+<option value="12" {% if data["boards"]["weather"]["forecast_update"] == 12 %}selected{% endif %}>12 hours</option>
+<option value="24" {% if data["boards"]["weather"]["forecast_update"] == 24 %}selected{% endif %}>24 hours</option>
+</select>
+</dd>
+
+
+</dl>
+</div>
+<!-- /.card-body -->
+</div>
+
+<div class="card">
+<div class="card-header">
+<h3 class="card-title">Weather Alerts</h3>
+</div>
+<!-- /.card-header -->
+<div class="card-body">
+
+<dl class="row">
+
+<dt class="col-sm-4">Show Alerts</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="wxalert_show_alerts">
+<option value="1" {% if data["boards"]["wxalert"]["show_alerts"] == true %}selected{% endif %}>Yes</option>
+<option value="0" {% if data["boards"]["wxalert"]["show_alerts"] == false %}selected{% endif %}>No</option>
+</select>
+</dd>
+
+<dt class="col-sm-4">Alert Feed</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="wxalert_alert_feed">
+<option value="EC" {% if data["boards"]["wxalert"]["alert_feed"] == "EC" %}selected{% endif %}>EnvCanada</option>
+<option value="NWS" {% if data["boards"]["wxalert"]["alert_feed"] == "NWS" %}selected{% endif %}>National Weather Service (US Only)</option>
+</select>
+</dd>
+
+<dt class="col-sm-4">Alert Title</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="wxalert_alert_title">
+<option value="1" {% if data["boards"]["wxalert"]["alert_title"] == true %}selected{% endif %}>Yes</option>
+<option value="0" {% if data["boards"]["wxalert"]["alert_title"] == false %}selected{% endif %}>No</option>
+</select>
+</dd>
+
+<dt class="col-sm-4">Scroll Alert</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="wxalert_scroll_alert">
+<option value="1" {% if data["boards"]["wxalert"]["scroll_alert"] == true %}selected{% endif %}>Yes</option>
+<option value="0" {% if data["boards"]["wxalert"]["scroll_alert"] == false %}selected{% endif %}>No</option>
+</select>
+</dd>
+
+<dt class="col-sm-4">Alert Duration</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="wxalert_alert_duration">
+<option value="5" {% if data["boards"]["wxalert"]["alert_duration"] == 5 %}selected{% endif %}>5 seconds</option>
+<option value="10" {% if data["boards"]["wxalert"]["alert_duration"] == 10 %}selected{% endif %}>10 seconds</option>
+<option value="15" {% if data["boards"]["wxalert"]["alert_duration"] == 15 %}selected{% endif %}>15 seconds</option>
+<option value="30" {% if data["boards"]["wxalert"]["alert_duration"] == 30 %}selected{% endif %}>30 seconds</option>
+<option value="60" {% if data["boards"]["wxalert"]["alert_duration"] == 60 %}selected{% endif %}>1 minute</option>
+</select>
+</dd>
+
+<dt class="col-sm-4">Show On Clock</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="wxalert_show_on_clock">
+<option value="1" {% if data["boards"]["wxalert"]["show_on_clock"] == true %}selected{% endif %}>Yes</option>
+<option value="0" {% if data["boards"]["wxalert"]["show_on_clock"] == false %}selected{% endif %}>No</option>
+</select>
+</dd>
+
+<dt class="col-sm-4">Show Alert Title</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="wxalert_alert_title">
+<option value="1" {% if data["boards"]["wxalert"]["alert_title"] == true %}selected{% endif %}>Yes</option>
+<option value="0" {% if data["boards"]["wxalert"]["alert_title"] == false %}selected{% endif %}>No</option>
+</select>
+</dd>
+
+<dt class="col-sm-4">Show NWS Expiry</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="wxalert_nws_show_expire">
+<option value="1" {% if data["boards"]["wxalert"]["nws_show_expire"] == true %}selected{% endif %}>Yes</option>
+<option value="0" {% if data["boards"]["wxalert"]["nws_show_expire"] == false %}selected{% endif %}>No</option>
+</select>
+</dd>
+
+<dt class="col-sm-4">Scroll Alert</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="wxalert_scroll_alert">
+<option value="1" {% if data["boards"]["wxalert"]["scroll_alert"] == true %}selected{% endif %}>Yes</option>
+<option value="0" {% if data["boards"]["wxalert"]["scroll_alert"] == false %}selected{% endif %}>No</option>
+</select>
+</dd>
+
+<dt class="col-sm-4">Update Frequency</dt>
+<dd class="col-sm-8">
+<select class="form-control" name="wxalert_update_freq">
+<option value="5" {% if data["boards"]["wxalert"]["update_freq"] == 5 %}selected{% endif %}>5 minutes</option>
+<option value="10" {% if data["boards"]["wxalert"]["update_freq"] == 10 %}selected{% endif %}>10 minutes</option>
+<option value="15" {% if data["boards"]["wxalert"]["update_freq"] == 15 %}selected{% endif %}>15 minutes</option>
+<option value="30" {% if data["boards"]["wxalert"]["update_freq"] == 30 %}selected{% endif %}>30 minutes</option>
+<option value="60" {% if data["boards"]["wxalert"]["update_freq"] == 60 %}selected{% endif %}>1 hour</option>
+</select>
+</dd>
+
 </div>
 <!-- /.card-body -->
 </div>
@@ -304,5 +429,5 @@ Configure the details of your boards (<a href="https://github.com/riffnshred/nhl
 <button type="submit" class="btn btn-primary">Save</button>
 <button type="submit" class="btn btn-info">Save & Apply</button>
 </div><!-- /.container-fluid -->
-
+</form>
 {% endblock %}
