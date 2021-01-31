@@ -1,4 +1,4 @@
-import flask, time, json
+import flask, time, json, subprocess, requests
 from distutils.util import strtobool
 from scoreboard_config import ScoreboardConfig
 from flask import request, jsonify, Flask, send_from_directory, render_template
@@ -47,10 +47,25 @@ app.config["DEBUG"] = True
 
 data = {}
 
-@app.route('/')
+@app.route('/',methods=('GET', 'POST'))
 def index():
-	posts = ""
-	return render_template('overview.html', posts=posts)
+	if request.method == 'POST':
+		if request.form["action"] == "reload":
+			print("RELOAD")
+			subprocess.run(["supervisorctl","restart","nhl-led-scoreboard"],stderr=subprocess.PIPE,stdout=subprocess.PIPE,universal_newlines=True)
+		if request.form["action"] == "restart":
+			print("RESTART")
+			subprocess.run(["reboot"],stderr=subprocess.PIPE,stdout=subprocess.PIPE,universal_newlines=True)
+		if request.form["action"] == "shutdown":
+			print("SHUTDOWN")
+			subprocess.run(["shutdown","-h", "now"],stderr=subprocess.PIPE,stdout=subprocess.PIPE,universal_newlines=True)
+	scoreboardLogs = requests.get("http://127.0.0.1:9001/tail.html?processname=scoreboard&limit=2500")
+	#scoreboardLogs = subprocess.run(["tail","'/var/log/supervisor/scoreboard-stdout*'"],stderr=subprocess.PIPE,stdout=subprocess.PIPE,universal_newlines=True)
+	statMem = subprocess.run(["free","-m"],stderr=subprocess.PIPE,stdout=subprocess.PIPE,universal_newlines=True)
+	statDisk = subprocess.run(["df","-h"],stderr=subprocess.PIPE,stdout=subprocess.PIPE,universal_newlines=True)
+	statUptime = subprocess.run(["uptime"],stderr=subprocess.PIPE,stdout=subprocess.PIPE,universal_newlines=True)
+	statNet = subprocess.run(["ifconfig"],stderr=subprocess.PIPE,stdout=subprocess.PIPE,universal_newlines=True)
+	return render_template('overview.html', logs=scoreboardLogs.text, statMem=statMem, statDisk=statDisk, statUptime=statUptime,statNet=statNet)
 	#return app.send_static_file('templates/overview.html')
 
 
@@ -121,13 +136,28 @@ def config():
 	reload_config(None)
 	return render_template('nhl-config.html', data=app.data)
 
-@app.route("/sbio")
+@app.route("/sbio",methods=('GET', 'POST'))
 def sbio():
+	if request.method == 'POST':
+		app.data["sbio"]["dimmer"]["enabled"] = bool(strtobool(request.form["dimmer_enabled"]))
+		app.data["sbio"]["dimmer"]["mode"] = request.form["dimmer_mode"]
+		app.data["sbio"]["dimmer"]["daytime"] = request.form["dimmer_daytime"]
+		app.data["sbio"]["dimmer"]["nighttime"] = request.form["dimmer_nighttime"]
+		app.data["sbio"]["dimmer"]["sunset_brightness"] = int(request.form["sunset_brightness"])
+		app.data["sbio"]["dimmer"]["sunrise_brightness"] = int(request.form["sunrise_brightness"])
+		save_config()
+	reload_config(None)
 	return render_template('nhl-sbio.html', data=app.data)
 
-@app.route("/advanced")
+@app.route("/advanced",methods=('GET', 'POST'))
 def advanced():
-	return render_template('nhl-advanced.html', data=app.data)
+	if request.method == 'POST':
+		if request.form["remote_control"] == "1":
+			subprocess.run(["systemctl","restart","openvpn"],stdout=subprocess.PIPE,universal_newlines=True)
+		else:
+			subprocess.run(["systemctl","stop","openvpn"],stdout=subprocess.PIPE,universal_newlines=True)
+	isRemote = subprocess.run(["systemctl","status","openvpn"],stdout=subprocess.PIPE,universal_newlines=True)
+	return render_template('nhl-advanced.html', data=app.data, isRemote=isRemote)
 
 @app.route('/js/<path:path>')
 def send_js(path):

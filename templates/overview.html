@@ -21,11 +21,12 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-
 <div class="row">
-&nbsp;&nbsp;&nbsp;<button type="button" class="col-3 btn bg-gradient-danger btn-lg">Sleep</button>&nbsp;
-<button type="button" class="col-3 btn bg-gradient-danger btn-lg">Restart</button>&nbsp;
-<button type="button" class="col-3 btn bg-gradient-danger btn-lg">Shutdown</button>
+<form action="/" method="post">
+<button type="submit" name="action" value="reload" class="btn bg-gradient-info btn-lg" onclick="javascript:return confirm('This will reload the board software. This process will take about 30 seconds.');">Reload</button>&nbsp;
+<button type="submit" name="action" value="restart" class="btn bg-gradient-warning btn-lg" onclick="javascript:return confirm('This will restart the board. The board will be offline for 2-5 minutes.');">Restart</button>&nbsp;
+<button type="submit" name="action" value="shutdown" class="btn bg-gradient-danger btn-lg" onclick="javascript:return confirm('This will shutdown the board. You will need to power cycle it to bring it online.');">Shutdown</button>&nbsp;
+</form>
 </div>
 </div></div>
 
@@ -35,10 +36,17 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-Uptime<br>
-CPU<br/>
-Memory<br/>
-Disk Space<br/>
+<strong>Uptime</strong><br/>
+<pre>{{ statUptime.stdout }}</pre>
+
+<strong>Memory</strong><br/>
+<pre>{{ statMem.stdout }}</pre>
+
+<strong>Disk Space</strong><br/>
+<pre>{{ statDisk.stdout }}</pre>
+
+<strong>Network</strong><br/>
+<pre>{{ statNet.stdout }}</pre>
 
 </div></div>
           </section>
@@ -56,7 +64,8 @@ Disk Space<br/>
                 <!-- /.card-tools -->
               </div>
               <div class="card-body">
-<textarea class="form-control" rows="30" placeholder="Enter ..." disabled=""></textarea>
+<!-- http://192.168.1.146:9001/tail.html?processname=scoreboard&limit=2500 -->
+<iframe src="http://{{ request.host.split(':')[0] }}:9001/tail.html?processname=nhl-led-scoreboard&limit=2500" width="100%" height="650px" frameBorder="0"></iframe>
               </div>
               <!-- /.card-body-->
             </div>

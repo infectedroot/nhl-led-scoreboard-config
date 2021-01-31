@@ -6,6 +6,7 @@ Things that influence how the board operates
 {% endblock %}
 
 {%block content %}
+<form method="POST" action="/sbio">
       <div class="container-fluid">
         <!-- Main row -->
         <div class="row">
@@ -24,10 +25,10 @@ Things that influence how the board operates
 <dt class="col-sm-4">Enabled</dt>
 <dd class="col-sm-8">
 <select class="form-control" name="dimmer_enabled">
-<option value="1">Yes</option>
-<option value="0">No</option>
+<option value="1" {% if data["sbio"]["dimmer"]["enabled"] == true %}selected{% endif %}>Yes</option>
+<option value="0" {% if data["sbio"]["dimmer"]["enabled"] == false %}selected{% endif %}>No</option>
 </select>
-<small>When do we show goal animations?</small><br/><br/>
+<small>Enable the dimmer?</small><br/><br/>
 </dd>
 
   <dt class="col-sm-4">Daytime</dt>
@@ -43,7 +44,7 @@ Things that influence how the board operates
 </option>
 {% endfor %}
 </select>
-<small>How often does the board refresh?</small><br/><br/>
+<small>When is day time?</small><br/><br/>
   </dd>
 
 <dt class="col-sm-4">Nighttime</dt>
@@ -59,7 +60,7 @@ Things that influence how the board operates
 </option>
 {% endfor %}
                         </select>
-<small>How often do we show shots on goal?</small><br/><br/>
+<small>When is night time?</small><br/><br/>
 </dd>
 </dl>
 </div>
@@ -70,33 +71,42 @@ Things that influence how the board operates
   <dt class="col-sm-4">Mode</dt>
   <dd class="col-sm-8">
 <select class="form-control" name="dimmer_mode">
-                          <option value="always">Always</option>
-                          <option value="offday">Off-Day</option>
+                          <option value="always" {% if data["sbio"]["dimmer"]["mode"] == "always" %}selected{% endif %}>Always</option>
+                          <option value="offday" {% if data["sbio"]["dimmer"]["mode"] == "offday" %}selected{% endif %}>Off-Day</option>
                         </select>
-<small>When do we start showing the day's games?</small><br/><br/>
+<small>Mode at which the dimmer will operate. If set at "always", the dimmer will operate at all time. at "offday", it will operate only when your preferred teams don't play any game</small><br/><br/>
 </dd>
 
 <dt class="col-sm-4">Sunrise Brightness</dt>
 <dd class="col-sm-8">
-<select class="form-control">
-<option>option 5</option>
-<option>option 5</option>
-<option>option 5</option>
-<option>option 5</option>
-<option>option 5</option>
-<option>option 5</option>
-<option>option 5</option>
-<option>option 5</option>
+<select class="form-control" name="sunrise_brightness">
+<option value="0" {% if data["sbio"]["dimmer"]["sunrise_brightness"] == 0 %}selected{% endif %}>0 - Off</option>
+<option value="1" {% if data["sbio"]["dimmer"]["sunrise_brightness"] == 1 %}selected{% endif %}>1 - Very Low</option>
+<option value="5" {% if data["sbio"]["dimmer"]["sunrise_brightness"] == 5 %}selected{% endif %}>5 - Low</option>
+<option value="10" {% if data["sbio"]["dimmer"]["sunrise_brightness"] == 10 %}selected{% endif %}>10</option>
+<option value="15" {% if data["sbio"]["dimmer"]["sunrise_brightness"] == 15 %}selected{% endif %}>15</option>
+<option value="20" {% if data["sbio"]["dimmer"]["sunrise_brightness"] == 20 %}selected{% endif %}>20 - Medium</option>
+<option value="25" {% if data["sbio"]["dimmer"]["sunrise_brightness"] == 25 %}selected{% endif %}>25</option>
+<option value="30" {% if data["sbio"]["dimmer"]["sunrise_brightness"] == 30 %}selected{% endif %}>30</option>
+<option value="35" {% if data["sbio"]["dimmer"]["sunrise_brightness"] == 35 %}selected{% endif %}>35 - High</option>
 </select>
-<small>Where are you? Enter your City name</small><br/>
+<small>What do you want as the brightness during the day?</small><br/>
 </dd>
 
 <dt class="col-sm-4">Sunset Brightness</dt>
 <dd class="col-sm-8">
-<select class="form-control">
-<option>option 5</option>
+<select class="form-control" name="sunset_brightness">
+<option value="0" {% if data["sbio"]["dimmer"]["sunset_brightness"] == 0 %}selected{% endif %}>0 - Off</option>
+<option value="1" {% if data["sbio"]["dimmer"]["sunset_brightness"] == 1 %}selected{% endif %}>1 - Very Low</option>
+<option value="5" {% if data["sbio"]["dimmer"]["sunset_brightness"] == 5 %}selected{% endif %}>5 - Low</option>
+<option value="10" {% if data["sbio"]["dimmer"]["sunset_brightness"] == 10 %}selected{% endif %}>10</option>
+<option value="15" {% if data["sbio"]["dimmer"]["sunset_brightness"] == 15 %}selected{% endif %}>15</option>
+<option value="20" {% if data["sbio"]["dimmer"]["sunset_brightness"] == 20 %}selected{% endif %}>20 - Medium</option>
+<option value="25" {% if data["sbio"]["dimmer"]["sunset_brightness"] == 25 %}selected{% endif %}>25</option>
+<option value="30" {% if data["sbio"]["dimmer"]["sunset_brightness"] == 30 %}selected{% endif %}>30</option>
+<option value="35" {% if data["sbio"]["dimmer"]["sunset_brightness"] == 35 %}selected{% endif %}>35 - High</option>
 </select>
-<small>Where are you? Enter your City name</small><br/>
+<small>What do you want as the brightness during the night?</small><br/>
 </dd>
 
 </dl>
@@ -111,5 +121,5 @@ Things that influence how the board operates
 <button type="submit" class="btn btn-primary">Save</button>
 <button type="submit" class="btn btn-info">Save & Apply</button>
       </div><!-- /.container-fluid -->
-
+</form>
 {% endblock %}
