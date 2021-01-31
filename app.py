@@ -59,7 +59,7 @@ def index():
 		if request.form["action"] == "shutdown":
 			print("SHUTDOWN")
 			subprocess.run(["shutdown","-h", "now"],stderr=subprocess.PIPE,stdout=subprocess.PIPE,universal_newlines=True)
-	scoreboardLogs = requests.get("http://127.0.0.1:9001/tail.html?processname=scoreboard&limit=2500")
+	scoreboardLogs = requests.get("http://127.0.0.1:9001/tail.html?processname=scoreboard&limit=1800")
 	#scoreboardLogs = subprocess.run(["tail","'/var/log/supervisor/scoreboard-stdout*'"],stderr=subprocess.PIPE,stdout=subprocess.PIPE,universal_newlines=True)
 	statMem = subprocess.run(["free","-m"],stderr=subprocess.PIPE,stdout=subprocess.PIPE,universal_newlines=True)
 	statDisk = subprocess.run(["df","-h"],stderr=subprocess.PIPE,stdout=subprocess.PIPE,universal_newlines=True)
