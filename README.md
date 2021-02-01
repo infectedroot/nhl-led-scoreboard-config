@@ -9,13 +9,17 @@ A few of my friends would like their own NHL LED Scoreboard, and they're not nec
 
 This is my first attempt at a python webapp, so let's see where I can take this!
 
+## Running
+
+From the root of the repo, run `python3 app.py`
+
 ## Screenshots
 
 ### Overview
 ![Overview](img/overview.png)
 
 ### Preferences
-![Preferences](img/prefs.jpg)
+![Preferences](img/prefs.png)
 
 ### Board States
 ![Board States](img/states.png)
