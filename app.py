@@ -5,7 +5,7 @@ from flask import request, jsonify, Flask, send_from_directory, render_template
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 
-configFile = "config.json.sample"
+configFile = "/home/pi/nhl-led-scoreboard/config/config.json"
 
 TEAMS     = ['Avalanche','Blackhawks','Blues','Blue Jackets','Bruins','Canadiens','Canucks','Capitals','Coyotes','Devils','Ducks','Flames','Flyers',
              'Golden Knights','Hurricanes','Islanders','Jets','Kings','Maple Leafs','Lightning','Oilers','Panthers','Penguins','Predators',
